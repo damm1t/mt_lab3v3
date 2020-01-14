@@ -1,16 +1,12 @@
-
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.TerminalNode;
-
 import java.util.stream.Collectors;
 
 public class Visitor extends genBaseVisitor<String> {
     final String TAB = "\t";
 
     private String read(genParser.CommandContext ctx) {
-        StringBuilder res = new StringBuilder();
+        var res = new StringBuilder();
         res.append("scanf(\"");
-        for (TerminalNode ignored : ctx.NAME())
+        for (var node : ctx.NAME())
             res.append("%d");
         if (ctx.start.getText().equals("readln")) res.append("\\n");
 
@@ -27,19 +23,19 @@ public class Visitor extends genBaseVisitor<String> {
         StringBuilder res = new StringBuilder();
 
         res.append("printf(\"");
-        for (ParseTree t : ctx.children) {
-            if (t.getPayload() instanceof genParser.ArithmeticContext) {
+        for (var tree : ctx.children) {
+            if (tree.getPayload() instanceof genParser.ArithmeticContext) {
                 res.append("%d");
-            } else if (t.getText().startsWith("'")) {
-                res.append(t.getText().replace("'", ""));
+            } else if (tree.getText().startsWith("'")) {
+                res.append(tree.getText().replace("'", ""));
             }
         }
         if (ctx.start.getText().equals("writeln")) res.append("\\n");
 
         res.append("\"");
-        for (ParseTree t : ctx.children) {
-            if (t.getPayload() instanceof genParser.ArithmeticContext) {
-                res.append(", ").append(t.getText());
+        for (var tree : ctx.children) {
+            if (tree.getPayload() instanceof genParser.ArithmeticContext) {
+                res.append(", ").append(tree.getText());
             }
         }
         res.append(");");
@@ -62,21 +58,21 @@ public class Visitor extends genBaseVisitor<String> {
     }
 
     public String visitCommands(genParser.CommandsContext ctx) {
-        StringBuilder res = new StringBuilder();
-        for (genParser.CommandContext c : ctx.command()) {
-            res.append(TAB + visitCommand(c)).append("\n");
+        var res = new StringBuilder();
+        for (var commandContext : ctx.command()) {
+            res.append(TAB).append(visitCommand(commandContext)).append("\n");
         }
         return res.toString();
     }
 
     public String visitProgram(genParser.ProgramContext ctx) {
-        StringBuilder res = new StringBuilder();
+        var res = new StringBuilder();
         if (ctx.VAR() != null) {
             res = new StringBuilder(visitVariables(ctx.variables()));
             res.append("\n");
         }
-        for (genParser.FunctionContext f : ctx.function()) {
-            res.append(visitFunction(f));
+        for (var context : ctx.function()) {
+            res.append(visitFunction(context));
             res.append("\n\n");
         }
         res.append("int main() {\n");
@@ -86,7 +82,7 @@ public class Visitor extends genBaseVisitor<String> {
     }
 
     public String visitDeclaration(genParser.DeclarationContext ctx, boolean separate) {
-        StringBuilder res = new StringBuilder();
+        var res = new StringBuilder();
         if (!separate) {
             res.append(visitType(ctx.type()));
             res.append(ctx.NAME().stream().map(t -> t.getSymbol().getText()).collect(Collectors.joining(", ")));
@@ -98,7 +94,7 @@ public class Visitor extends genBaseVisitor<String> {
     }
 
     public String visitType(genParser.TypeContext ctx) {
-        StringBuilder res = new StringBuilder();
+        var res = new StringBuilder();
         switch (ctx.getText()) {
             case "integer": {
                 res.append("short ");
@@ -123,9 +119,9 @@ public class Visitor extends genBaseVisitor<String> {
     }
 
     public String visitVariables(genParser.VariablesContext ctx) {
-        StringBuilder res = new StringBuilder();
-        for (genParser.DeclarationContext c : ctx.declaration()) {
-            res.append(visitDeclaration(c, false)).append(";\n");
+        var res = new StringBuilder();
+        for (var context : ctx.declaration()) {
+            res.append(visitDeclaration(context, false)).append(";\n");
         }
         return res.toString();
     }
