@@ -132,7 +132,7 @@ public class Visitor extends genBaseVisitor<String> {
                 visitVariables(ctx.variables()) +
                 visitCommands(ctx.commands()) +
                 TAB + "return " +
-                ctx.arithmetic().getText() +
+                ctx.returnValue().arithmetic().getText() +
                 ";\n}";
     }
 

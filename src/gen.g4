@@ -2,7 +2,11 @@ grammar gen;
 
 program : (VAR variables)? (function)* BEGIN commands END '.';
 
-function : h=header (VAR variables)? BEGIN commands n=NAME COLON EQ arithmetic SEMICOLON END SEMICOLON {$h.name.equals($n.getText())}?;
+function : h=header (VAR variables)? BEGIN commands v=returnValue END SEMICOLON {$h.name.equals($v.name)}?;
+
+
+returnValue returns [String name]
+    : n=NAME COLON EQ arithmetic SEMICOLON {$name = $n.getText();};
 
 header returns [String name]
     : FUNCTION n=NAME LPAR ((VAR)? declaration SEMICOLON)* (VAR)? declaration RPAR COLON type SEMICOLON {$name = $n.getText();};
