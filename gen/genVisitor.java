@@ -64,6 +64,48 @@ public interface genVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCommands(genParser.CommandsContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link genParser#curwa}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCurwa(genParser.CurwaContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link genParser#els}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEls(genParser.ElsContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link genParser#condition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCondition(genParser.ConditionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link genParser#cond}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCond(genParser.CondContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link genParser#part}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPart(genParser.PartContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link genParser#boolOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolOp(genParser.BoolOpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link genParser#condOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCondOp(genParser.CondOpContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link genParser#command}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

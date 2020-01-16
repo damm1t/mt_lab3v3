@@ -25,7 +25,24 @@ op : PLUS
     | DIV
     | MUL;
 
-commands : (command SEMICOLON)*;
+commands : (curwa | command SEMICOLON)*;
+
+curwa : (IF | WHILE) LPAR condition RPAR THEN BEGIN commands END (els)?;
+
+els : (ELSE BEGIN commands END);
+
+condition : (cond condOp)* cond;
+
+cond : part boolOp part;
+
+part : (NAME | arithmetic);
+
+boolOp : GE
+    | LE
+    | EQ
+    | NOTEQ;
+
+condOp : AND | OR;
 
 command : NAME EQ arithmetic
     | (READ | READLN) LPAR (NAME COMMA)* NAME RPAR
@@ -39,6 +56,24 @@ arithmetic : arithmetic op arithmetic
     | NAME LPAR ((NAME COMMA)* NAME)? RPAR;
 
 FUNCTION : 'function';
+
+IF : 'if';
+
+WHILE : 'while';
+
+ELSE : 'else';
+
+THEN : 'then';
+
+AND : 'and';
+
+OR : 'or';
+
+GE : '>';
+
+LE : '<';
+
+NOTEQ : '<>';
 
 INTEGER : 'integer';
 

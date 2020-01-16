@@ -97,6 +97,76 @@ public interface genListener extends ParseTreeListener {
 	 */
 	void exitCommands(genParser.CommandsContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link genParser#curwa}.
+	 * @param ctx the parse tree
+	 */
+	void enterCurwa(genParser.CurwaContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link genParser#curwa}.
+	 * @param ctx the parse tree
+	 */
+	void exitCurwa(genParser.CurwaContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link genParser#els}.
+	 * @param ctx the parse tree
+	 */
+	void enterEls(genParser.ElsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link genParser#els}.
+	 * @param ctx the parse tree
+	 */
+	void exitEls(genParser.ElsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link genParser#condition}.
+	 * @param ctx the parse tree
+	 */
+	void enterCondition(genParser.ConditionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link genParser#condition}.
+	 * @param ctx the parse tree
+	 */
+	void exitCondition(genParser.ConditionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link genParser#cond}.
+	 * @param ctx the parse tree
+	 */
+	void enterCond(genParser.CondContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link genParser#cond}.
+	 * @param ctx the parse tree
+	 */
+	void exitCond(genParser.CondContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link genParser#part}.
+	 * @param ctx the parse tree
+	 */
+	void enterPart(genParser.PartContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link genParser#part}.
+	 * @param ctx the parse tree
+	 */
+	void exitPart(genParser.PartContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link genParser#boolOp}.
+	 * @param ctx the parse tree
+	 */
+	void enterBoolOp(genParser.BoolOpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link genParser#boolOp}.
+	 * @param ctx the parse tree
+	 */
+	void exitBoolOp(genParser.BoolOpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link genParser#condOp}.
+	 * @param ctx the parse tree
+	 */
+	void enterCondOp(genParser.CondOpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link genParser#condOp}.
+	 * @param ctx the parse tree
+	 */
+	void exitCondOp(genParser.CondOpContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link genParser#command}.
 	 * @param ctx the parse tree
 	 */

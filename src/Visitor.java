@@ -44,26 +44,84 @@ public class Visitor extends genBaseVisitor<String> {
 
     @Override
     public String visitCommand(genParser.CommandContext ctx) {
+        var res = new StringBuilder();
+        res.append(TAB);
         switch (ctx.start.getText()) {
             case "read":
             case "readln":
-                return read(ctx);
+                res.append(read(ctx));
             case "write":
             case "writeln":
-                return write(ctx);
+                res.append(write(ctx));
             default:
-                return (ctx.getText() + ";");
+                res.append(ctx.getText()).append(";");
 
         }
+        res.append("\n");
+        return res.toString();
     }
 
-    public String visitCommands(genParser.CommandsContext ctx) {
-        var res = new StringBuilder();
-        for (var commandContext : ctx.command()) {
-            res.append(TAB).append(visitCommand(commandContext)).append("\n");
+    public String visitCurwa(genParser.CurwaContext ctx) {
+        String res = ctx.start.getText() +
+                " (" +
+                visitCondition(ctx.condition()) +
+                ") \n" +
+                "{\n" +
+                visitCommands(ctx.commands()) +
+                "}\n";
+        if (ctx.els().children != null){
+            res += "else {\n" + visitCommands(ctx.commands()) + "}\n";
+        }
+        return res;
+    }
+
+    public String visitCondition(genParser.ConditionContext ctx) {
+        StringBuilder res = new StringBuilder();
+        for (var ch : ctx.children){
+            var cur = visit(ch);
+            if (cur != null)    res.append(cur);
         }
         return res.toString();
     }
+
+    public String visitCommands(genParser.CommandsContext ctx) {
+        StringBuilder res = new StringBuilder();
+        for (var ch : ctx.children) {
+            var cur = visit(ch);
+            if (cur != null)    res.append(cur);
+        }
+        return res.toString();
+    }
+
+    public String visitCondOp(genParser.CondOpContext ctx) {
+        switch (ctx.getText()) {
+            case "and":
+                return " && ";
+            case "or":
+                return " || ";
+            default:
+                return "";
+        }
+    }
+
+    public String visitCond(genParser.CondContext ctx) {
+        return ctx.start.getText() + visitBoolOp(ctx.boolOp()) + ctx.stop.getText();
+    }
+
+    public String visitBoolOp(genParser.BoolOpContext ctx) {
+        switch (ctx.getText()) {
+            case ">":
+            case "<":
+                return ctx.getText();
+            case "=":
+                return "==";
+            case "<>":
+                return "!=";
+            default:
+                return "";
+        }
+    }
+
 
     public String visitProgram(genParser.ProgramContext ctx) {
         var res = new StringBuilder();
